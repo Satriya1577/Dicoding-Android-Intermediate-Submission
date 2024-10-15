@@ -23,15 +23,17 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_
     }
     class MyViewHolder(private val binding: ItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(review: ListStoryItem){
-            binding.tvName.text = "${review.name}"
             Glide.with(binding.imgStory.context)
                 .load(review.photoUrl)
                 .into(binding.imgStory)
+            binding.tvName.text = "${review.name}"
+            binding.tvDeskripsi.text = "${review.description}"
 
             binding.root.setOnClickListener {
                 val context = it.context
                 val intent = Intent(context, DetailStoryActivity::class.java)
-                intent.putExtra("EVENT_ID", review.id)  // Send the event id to DetailActivity
+                val story = ListStoryItem(photoUrl = review.photoUrl, name = review.name, description = review.description)
+                intent.putExtra(DetailStoryActivity.EXTRA_STORY, story)
                 context.startActivity(intent)
             }
         }

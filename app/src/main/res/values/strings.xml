@@ -15,5 +15,6 @@
     <string name="greeting">Halo %1$s,</string>
     <string name="logout">Logout</string>
     <string name="language">Language settings</string>
+    <string name="buttonBack">Kembali ke home</string>
 
 </resources>

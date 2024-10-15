@@ -13,8 +13,11 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mystoryapp.R
+import com.example.mystoryapp.adapter.StoryAdapter
 import com.example.mystoryapp.data.remote.Result
+import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.ui.ViewModelFactory
 import com.example.mystoryapp.ui.welcome.WelcomeActivity
@@ -52,15 +55,26 @@ class MainActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        // supportActionBar?.hide()
+        setSupportActionBar(binding.toolbar)
     }
 
+
     private fun setupAction() {
+        val storyAdapter = StoryAdapter()
         viewModel.getStories().observe(this) { result ->
             if (result != null) {
                 when(result) {
                     is Result.Success -> {
-
+                        val items = ArrayList<ListStoryItem>()
+                        result.data.forEach {
+                            items.add(it)
+                        }
+                        storyAdapter.submitList(items)
+                        binding.rvStories.apply {
+                            layoutManager = LinearLayoutManager(this@MainActivity)
+                            adapter = storyAdapter
+                        }
+                        binding.progressBar.visibility = View.GONE
                     }
                     is Result.Error -> {
                         AlertDialog.Builder(this).apply {
@@ -81,7 +95,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

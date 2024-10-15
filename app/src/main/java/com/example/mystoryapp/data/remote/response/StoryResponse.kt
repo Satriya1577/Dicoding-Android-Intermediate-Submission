@@ -1,5 +1,7 @@
 package com.example.mystoryapp.data.remote.response
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class StoryResponse(
@@ -13,6 +15,7 @@ data class StoryResponse(
 	@field:SerializedName("message")
 	val message: String? = null
 )
+
 
 data class ListStoryItem(
 
@@ -36,4 +39,40 @@ data class ListStoryItem(
 
 	@field:SerializedName("lat")
 	val lat: Double? = null
-)
+) : Parcelable {
+	constructor(parcel: Parcel) : this(
+		parcel.readString(),
+		parcel.readString(),
+		parcel.readString(),
+		parcel.readString(),
+		parcel.readValue(Double::class.java.classLoader) as? Double,
+		parcel.readString(),
+		parcel.readValue(Double::class.java.classLoader) as? Double
+	) {
+	}
+
+	override fun writeToParcel(parcel: Parcel, flags: Int) {
+		parcel.writeString(photoUrl)
+		parcel.writeString(createdAt)
+		parcel.writeString(name)
+		parcel.writeString(description)
+		parcel.writeValue(lon)
+		parcel.writeString(id)
+		parcel.writeValue(lat)
+	}
+
+	override fun describeContents(): Int {
+		return 0
+	}
+
+	companion object CREATOR : Parcelable.Creator<ListStoryItem> {
+		override fun createFromParcel(parcel: Parcel): ListStoryItem {
+			return ListStoryItem(parcel)
+		}
+
+		override fun newArray(size: Int): Array<ListStoryItem?> {
+			return arrayOfNulls(size)
+		}
+	}
+
+}
