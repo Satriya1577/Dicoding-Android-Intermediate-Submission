@@ -41,7 +41,7 @@
         android:paddingBottom="72dp"/>
 
     <ImageView
-        android:id="@+id/btnFavorite"
+        android:id="@+id/btnAddStories"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:background="@drawable/button_background"

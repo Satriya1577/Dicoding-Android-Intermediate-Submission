@@ -1,8 +1,11 @@
 package com.example.mystoryapp.adapter
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -30,11 +33,18 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_
             binding.tvDeskripsi.text = "${review.description}"
 
             binding.root.setOnClickListener {
-                val context = it.context
-                val intent = Intent(context, DetailStoryActivity::class.java)
+                val intent = Intent(binding.root.context, DetailStoryActivity::class.java)
                 val story = ListStoryItem(photoUrl = review.photoUrl, name = review.name, description = review.description)
                 intent.putExtra(DetailStoryActivity.EXTRA_STORY, story)
-                context.startActivity(intent)
+
+                val optionsCompat: ActivityOptionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        binding.root.context as Activity,
+                        Pair(binding.imgStory, "profile"),
+                        Pair(binding.tvName, "name"),
+                        Pair(binding.tvDeskripsi, "description"),
+                    )
+                binding.root.context.startActivity(intent,optionsCompat.toBundle())
             }
         }
     }

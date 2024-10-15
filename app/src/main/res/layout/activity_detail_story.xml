@@ -44,7 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="fitXY"
-                android:contentDescription="@null" />
+                android:contentDescription="@null"
+                android:transitionName="storyImage"/>
 
             <TextView
                 android:id="@+id/tvName"
@@ -54,7 +55,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:textSize="24sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:transitionName="storyName"/>
 
             <TextView
                 android:id="@+id/tvDeskripsi"
@@ -63,7 +65,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:transitionName="storyDescription"/>
         </LinearLayout>
     </ScrollView>
     <Button

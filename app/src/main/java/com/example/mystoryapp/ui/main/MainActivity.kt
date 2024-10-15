@@ -93,6 +93,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        binding.btnAddStories.setOnClickListener {
 
         }
     }
@@ -112,6 +115,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getStories()
     }
 
 //    private fun playAnimation() {
