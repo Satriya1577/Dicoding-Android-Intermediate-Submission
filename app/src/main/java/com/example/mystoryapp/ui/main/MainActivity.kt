@@ -5,11 +5,16 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mystoryapp.R
+import com.example.mystoryapp.data.remote.Result
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.ui.ViewModelFactory
 import com.example.mystoryapp.ui.welcome.WelcomeActivity
@@ -34,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         setupView()
         setupAction()
-        playAnimation()
+        // playAnimation()
     }
 
     private fun setupView() {
@@ -47,29 +52,69 @@ class MainActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        supportActionBar?.hide()
+        // supportActionBar?.hide()
     }
 
     private fun setupAction() {
-        binding.logoutButton.setOnClickListener {
-            viewModel.logout()
+        viewModel.getStories().observe(this) { result ->
+            if (result != null) {
+                when(result) {
+                    is Result.Success -> {
+
+                    }
+                    is Result.Error -> {
+                        AlertDialog.Builder(this).apply {
+                            setTitle("Warning!")
+                            setMessage("Terjadi kesalahan saat mengambil data story ${result.error} ")
+                            setPositiveButton("Lanjut") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            create()
+                            show()
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                }
+            }
+
         }
+
     }
 
-    private fun playAnimation() {
-        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
-            duration = 6000
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.REVERSE
-        }.start()
-
-        val name = ObjectAnimator.ofFloat(binding.nameTextView, View.ALPHA, 1f).setDuration(100)
-        val message = ObjectAnimator.ofFloat(binding.messageTextView, View.ALPHA, 1f).setDuration(100)
-        val logout = ObjectAnimator.ofFloat(binding.logoutButton, View.ALPHA, 1f).setDuration(100)
-
-        AnimatorSet().apply {
-            playSequentially(name, message, logout)
-            startDelay = 100
-        }.start()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_setting_language -> {
+
+            }
+            R.id.action_logut -> {
+               viewModel.logout()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+//    private fun playAnimation() {
+//        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
+//            duration = 6000
+//            repeatCount = ObjectAnimator.INFINITE
+//            repeatMode = ObjectAnimator.REVERSE
+//        }.start()
+//
+//        val name = ObjectAnimator.ofFloat(binding.nameTextView, View.ALPHA, 1f).setDuration(100)
+//        val message = ObjectAnimator.ofFloat(binding.messageTextView, View.ALPHA, 1f).setDuration(100)
+//        val logout = ObjectAnimator.ofFloat(binding.logoutButton, View.ALPHA, 1f).setDuration(100)
+//
+//        AnimatorSet().apply {
+//            playSequentially(name, message, logout)
+//            startDelay = 100
+//        }.start()
+//    }
 }

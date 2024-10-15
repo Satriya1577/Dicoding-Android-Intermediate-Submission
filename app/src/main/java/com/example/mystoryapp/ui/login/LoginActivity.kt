@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mystoryapp.data.pref.UserModel
+import com.example.mystoryapp.data.remote.Result
 import com.example.mystoryapp.databinding.ActivityLoginBinding
 import com.example.mystoryapp.ui.ViewModelFactory
 import com.example.mystoryapp.ui.main.MainActivity
@@ -47,19 +48,52 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.loginButton.setOnClickListener {
+
             val email = binding.emailEditText.text.toString()
-            viewModel.saveSession(UserModel(email, "sample_token"))
-            AlertDialog.Builder(this).apply {
-                setTitle("Yeah!")
-                setMessage("Anda berhasil login. Sudah tidak sabar untuk berbagi cerita ya?")
-                setPositiveButton("Lanjut") { _, _ ->
-                    val intent = Intent(context, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
+            val password = binding.passwordEditText.text.toString()
+
+            viewModel.login(email, password).observe(this) { result ->
+                if (result != null) {
+                    when(result) {
+                        is Result.Success -> {
+                            viewModel.saveSession(UserModel(
+                                userId = "${result.data.loginResult?.userId}",
+                                token = "${result.data.loginResult?.token}",
+                                name = "${result.data.loginResult?.name}",
+                                isLogin = true
+                            ))
+                            AlertDialog.Builder(this).apply {
+                                setTitle("Yeah!")
+                                setMessage("Anda berhasil login. Sudah tidak sabar untuk berbagi cerita ya?")
+                                setPositiveButton("Lanjut") { _, _ ->
+                                    val intent = Intent(context, MainActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                create()
+                                show()
+                            }
+                            binding.progressBar.visibility = View.GONE
+                        }
+                        is Result.Error -> {
+                            AlertDialog.Builder(this).apply {
+                                setTitle("Warning!")
+                                setMessage("Akun dengan $email ${result.error} ")
+                                setPositiveButton("Lanjut") { dialog, _ ->
+                                    dialog.dismiss()
+                                }
+                                create()
+                                show()
+                            }
+                            binding.progressBar.visibility = View.GONE
+                        }
+                        is Result.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                    }
                 }
-                create()
-                show()
+
             }
         }
     }
