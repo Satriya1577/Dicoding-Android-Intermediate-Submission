@@ -1,7 +1,5 @@
 package com.example.mystoryapp.ui.main
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +18,7 @@ import com.example.mystoryapp.data.remote.Result
 import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.ui.ViewModelFactory
+import com.example.mystoryapp.ui.upload.UploadStoryActivity
 import com.example.mystoryapp.ui.welcome.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
@@ -96,7 +95,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnAddStories.setOnClickListener {
-
+            val moveIntent = Intent(this@MainActivity, UploadStoryActivity::class.java)
+            startActivity(moveIntent)
         }
     }
 
@@ -121,21 +121,4 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         viewModel.getStories()
     }
-
-//    private fun playAnimation() {
-//        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
-//            duration = 6000
-//            repeatCount = ObjectAnimator.INFINITE
-//            repeatMode = ObjectAnimator.REVERSE
-//        }.start()
-//
-//        val name = ObjectAnimator.ofFloat(binding.nameTextView, View.ALPHA, 1f).setDuration(100)
-//        val message = ObjectAnimator.ofFloat(binding.messageTextView, View.ALPHA, 1f).setDuration(100)
-//        val logout = ObjectAnimator.ofFloat(binding.logoutButton, View.ALPHA, 1f).setDuration(100)
-//
-//        AnimatorSet().apply {
-//            playSequentially(name, message, logout)
-//            startDelay = 100
-//        }.start()
-//    }
 }

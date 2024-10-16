@@ -6,14 +6,19 @@ import com.example.mystoryapp.data.pref.UserModel
 import com.example.mystoryapp.data.pref.UserPreference
 import com.example.mystoryapp.data.remote.Result
 import com.example.mystoryapp.data.remote.response.ErrorResponse
+import com.example.mystoryapp.data.remote.response.FileUploadResponse
 import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.data.remote.response.LoginResponse
 import com.example.mystoryapp.data.remote.response.RegisterResponse
 import com.example.mystoryapp.data.remote.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
-
+import java.io.File
 
 
 class StoryRepository private constructor(
@@ -76,6 +81,29 @@ class StoryRepository private constructor(
             emit(Result.Success(listStory))
         }catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
+        }
+    }
+
+
+    fun uploadStory(imageFile: File, description: String): LiveData<Result<FileUploadResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val requestBody = description.toRequestBody("text/plain".toMediaType())
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val multipartBody = MultipartBody.Part.createFormData(
+                "photo",
+                imageFile.name,
+                requestImageFile
+            )
+            val client = apiService.uploadStory(multipartBody, requestBody)
+            emit(Result.Success(client))
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+            val errorMessage = errorBody.message
+            emit(Result.Error(errorMessage ?: ""))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message ?: "Unknown error"))
         }
     }
 

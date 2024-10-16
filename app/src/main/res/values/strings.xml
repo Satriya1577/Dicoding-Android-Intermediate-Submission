@@ -16,5 +16,9 @@
     <string name="logout">Logout</string>
     <string name="language">Language settings</string>
     <string name="buttonBack">Kembali ke home</string>
+    <string name="camera">Camera</string>
+    <string name="upload">Upload</string>
+    <string name="gallery">Gallery</string>
+    <string name="description_hint">description</string>
 
 </resources>
