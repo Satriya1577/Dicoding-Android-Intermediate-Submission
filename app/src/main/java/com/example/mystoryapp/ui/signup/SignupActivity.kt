@@ -10,12 +10,9 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.example.mystoryapp.data.remote.Result
 import com.example.mystoryapp.databinding.ActivitySignUpBinding
 import com.example.mystoryapp.ui.ViewModelFactory
-import com.example.mystoryapp.ui.main.MainViewModel
-import kotlinx.coroutines.launch
 
 class SignupActivity : AppCompatActivity() {
     private val viewModel by viewModels<SignupViewModel> {

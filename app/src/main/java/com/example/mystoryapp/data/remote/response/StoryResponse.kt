@@ -48,10 +48,9 @@ data class ListStoryItem(
 		parcel.readValue(Double::class.java.classLoader) as? Double,
 		parcel.readString(),
 		parcel.readValue(Double::class.java.classLoader) as? Double
-	) {
-	}
+	)
 
-	override fun writeToParcel(parcel: Parcel, flags: Int) {
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
 		parcel.writeString(photoUrl)
 		parcel.writeString(createdAt)
 		parcel.writeString(name)
