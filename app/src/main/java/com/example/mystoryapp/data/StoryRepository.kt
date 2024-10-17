@@ -1,5 +1,6 @@
 package com.example.mystoryapp.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.mystoryapp.data.pref.UserModel
@@ -13,6 +14,7 @@ import com.example.mystoryapp.data.remote.response.RegisterResponse
 import com.example.mystoryapp.data.remote.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -79,7 +81,8 @@ class StoryRepository private constructor(
                 }
             }
             emit(Result.Success(listStory))
-        }catch (e: Exception) {
+        } catch (e: Exception) {
+            Log.e("StoryRepository", "Error fetching stories: ${e.message}")
             emit(Result.Error(e.message.toString()))
         }
     }

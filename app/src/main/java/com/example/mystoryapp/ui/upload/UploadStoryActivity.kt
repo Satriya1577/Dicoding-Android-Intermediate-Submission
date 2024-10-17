@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mystoryapp.R
 import com.example.mystoryapp.data.remote.Result
 import com.example.mystoryapp.databinding.ActivityUploadStoryBinding
 import com.example.mystoryapp.ui.ViewModelFactory
@@ -87,9 +88,9 @@ class UploadStoryActivity : AppCompatActivity(){
                     when(result) {
                         is Result.Success -> {
                             AlertDialog.Builder(this).apply {
-                                setTitle("Yeah!")
-                                setMessage("Anda berhasil mengupload story, kembali ke home")
-                                setPositiveButton("Lanjut") { _, _ ->
+                                setTitle(R.string.success_title)
+                                setMessage(R.string.success_upload_message)
+                                setPositiveButton(R.string.positive_reply) { _, _ ->
                                     val intent = Intent(this@UploadStoryActivity, MainActivity::class.java)
                                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     startActivity(intent)
@@ -102,9 +103,9 @@ class UploadStoryActivity : AppCompatActivity(){
                         }
                         is Result.Error -> {
                             AlertDialog.Builder(this).apply {
-                                setTitle("Warning!")
-                                setMessage("Terjadi kesalahan ${result.error}")
-                                setPositiveButton("Lanjut") { dialog, _ ->
+                                setTitle(R.string.failed_title)
+                                setMessage(result.error)
+                                setPositiveButton(R.string.positive_reply) { dialog, _ ->
                                     dialog.dismiss()
                                 }
                                 create()

@@ -3,6 +3,8 @@ package com.example.mystoryapp.ui.main
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -37,11 +39,10 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             }
+            // this log show normal value based on account log in
         }
-
         setupView()
         setupAction()
-        // playAnimation()
     }
 
     private fun setupView() {
@@ -77,9 +78,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     is Result.Error -> {
                         AlertDialog.Builder(this).apply {
-                            setTitle("Warning!")
-                            setMessage("Terjadi kesalahan saat mengambil data story ${result.error} ")
-                            setPositiveButton("Lanjut") { dialog, _ ->
+                            setTitle(R.string.failed_title)
+                            setMessage(result.error)
+                            setPositiveButton(R.string.positive_reply) { dialog, _ ->
                                 dialog.dismiss()
                             }
                             create()
@@ -108,10 +109,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_setting_language -> {
-
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             }
-            R.id.action_logut -> {
-               viewModel.logout()
+            R.id.action_logout -> {
+                viewModel.logout()
             }
         }
         return super.onOptionsItemSelected(item)

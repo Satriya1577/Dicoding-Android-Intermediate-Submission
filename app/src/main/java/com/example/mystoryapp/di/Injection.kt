@@ -1,6 +1,7 @@
 package com.example.mystoryapp.di
 
 import android.content.Context
+import android.util.Log
 import com.example.mystoryapp.data.StoryRepository
 import com.example.mystoryapp.data.pref.UserPreference
 import com.example.mystoryapp.data.pref.dataStore
@@ -11,10 +12,9 @@ import kotlinx.coroutines.runBlocking
 object Injection {
     fun provideRepository(context: Context): StoryRepository {
         val pref = UserPreference.getInstance(context.dataStore)
-        val user = runBlocking { pref.getUser().first()}
-        val apiService = ApiConfig.getApiService(user.token)
+        val apiService = ApiConfig.getApiService {
+            runBlocking { pref.getSession().first().token }
+        }
         return StoryRepository.getInstance(pref, apiService)
     }
-
-
 }

@@ -8,7 +8,9 @@ import com.example.mystoryapp.data.StoryRepository
 import com.example.mystoryapp.data.pref.UserModel
 import com.example.mystoryapp.data.remote.Result
 import com.example.mystoryapp.data.remote.response.ListStoryItem
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainViewModel(private val repository: StoryRepository) : ViewModel() {
     fun getSession(): LiveData<UserModel> {

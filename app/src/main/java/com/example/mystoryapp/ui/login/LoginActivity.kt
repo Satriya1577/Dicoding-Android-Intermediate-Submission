@@ -5,12 +5,14 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mystoryapp.R
 import com.example.mystoryapp.data.pref.UserModel
 import com.example.mystoryapp.data.remote.Result
 import com.example.mystoryapp.databinding.ActivityLoginBinding
@@ -63,9 +65,9 @@ class LoginActivity : AppCompatActivity() {
                                 isLogin = true
                             ))
                             AlertDialog.Builder(this).apply {
-                                setTitle("Yeah!")
-                                setMessage("Anda berhasil login. Sudah tidak sabar untuk berbagi cerita ya?")
-                                setPositiveButton("Lanjut") { _, _ ->
+                                setTitle(R.string.success_title)
+                                setMessage(R.string.success_login_message)
+                                setPositiveButton(R.string.positive_reply) { _, _ ->
                                     val intent = Intent(context, MainActivity::class.java)
                                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     startActivity(intent)
@@ -78,9 +80,9 @@ class LoginActivity : AppCompatActivity() {
                         }
                         is Result.Error -> {
                             AlertDialog.Builder(this).apply {
-                                setTitle("Warning!")
-                                setMessage("Akun dengan $email ${result.error} ")
-                                setPositiveButton("Lanjut") { dialog, _ ->
+                                setTitle(R.string.failed_title)
+                                setMessage(result.error)
+                                setPositiveButton(R.string.positive_reply) { dialog, _ ->
                                     dialog.dismiss()
                                 }
                                 create()
@@ -131,5 +133,4 @@ class LoginActivity : AppCompatActivity() {
             startDelay = 100
         }.start()
     }
-
 }

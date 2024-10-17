@@ -1,22 +1,28 @@
 <resources>
-    <string name="app_name">MyStoryApp</string>
+    <string name="app_name" translatable="false">MyStoryApp</string>
+    <string name="success_title" translatable="false">Yeah!</string>
+    <string name="failed_title" translatable="false">Warning!</string>
 
-    <string name="signup">Daftar</string>
-    <string name="login">Masuk</string>
-    <string name="message_welcome_page">Mau berbagi ilmu tentang Android, iOS, Machine Learning, Cloud, Frontend, Backend, dan bidang IT lainnya? Di Dicoding Story aja!</string>
-    <string name="title_welcome_page">Selamat datang di Dicoding Story!</string>
-    <string name="title_signup_page">Lengkapi data dirimu di bawah ini ya</string>
+    <string name="success_login_message">You have successfully logged in. Can\'t wait to share your story, huh?</string>
+    <string name="positive_reply">Next</string>
+    <string name="success_signup_message">Your email account is ready. Come on, log in and share your story.</string>
+    <string name="success_upload_message">You have successfully uploaded the story, return to home."</string>
+
+    <string name="signup">Sign up</string>
+    <string name="login">Login</string>
+    <string name="message_welcome_page">Want to share knowledge about Android, iOS, Machine Learning, Cloud, Frontend, Backend, and other IT fields? Just do it on Dicoding Story!</string>
+    <string name="title_welcome_page">Welcome to Dicoding Story!</string>
+    <string name="title_signup_page">Complete your details below</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="message_login_page">Masukkan dulu datamu ya</string>
-    <string name="title_login_page">Sudah siap untuk berbagi cerita?</string>
-    <string name="name">Nama</string>
+    <string name="message_login_page">Please enter your details first</string>
+    <string name="title_login_page">Ready to share your story?</string>
+    <string name="name">Name</string>
     <string name="logout">Logout</string>
     <string name="language">Language settings</string>
-    <string name="buttonBack">Kembali ke home</string>
+    <string name="button_back">Back to home</string>
     <string name="camera">Camera</string>
     <string name="upload">Upload</string>
     <string name="gallery">Gallery</string>
-    <string name="description_hint">description</string>
-
+    <string name="description_hint">Description</string>
 </resources>
