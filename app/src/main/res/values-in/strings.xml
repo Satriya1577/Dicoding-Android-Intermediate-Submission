@@ -23,4 +23,5 @@
     <string name="upload">Unggah</string>
     <string name="gallery">Galeri</string>
     <string name="description_hint">Deskripsi</string>
+    <string name="no_data_found">Tidak ada data</string>
 </resources>

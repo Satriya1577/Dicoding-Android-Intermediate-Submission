@@ -25,4 +25,6 @@
     <string name="upload">Upload</string>
     <string name="gallery">Gallery</string>
     <string name="description_hint">Description</string>
+    <string name="no_data_found">No data found</string>
+
 </resources>

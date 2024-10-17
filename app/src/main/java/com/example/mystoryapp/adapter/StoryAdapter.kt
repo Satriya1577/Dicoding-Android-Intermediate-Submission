@@ -3,48 +3,55 @@ package com.example.mystoryapp.adapter
 import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mystoryapp.data.remote.response.ListStoryItem
-import com.example.mystoryapp.databinding.ItemStoryBinding
-import com.example.mystoryapp.ui.detail.DetailStoryActivity
 import com.bumptech.glide.Glide
+import com.example.mystoryapp.R
+import com.example.mystoryapp.data.remote.response.ListStoryItem
+import com.example.mystoryapp.ui.detail.DetailStoryActivity
 
 
 class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyViewHolder(binding)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_story, parent, false)
+        return MyViewHolder(view)
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val review = getItem(position)
         holder.bind(review)
     }
-    class MyViewHolder(private val binding: ItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(review: ListStoryItem){
-            Glide.with(binding.imgStory.context)
-                .load(review.photoUrl)
-                .into(binding.imgStory)
-            binding.tvName.text = "${review.name}"
-            binding.tvDeskripsi.text = "${review.description}"
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val ivItemPhoto: ImageView = itemView.findViewById(R.id.iv_item_photo)
+        private val tvItemName: TextView = itemView.findViewById(R.id.tv_item_name)
+        private val tvDeskripsi: TextView = itemView.findViewById(R.id.tvDeskripsi)
 
-            binding.root.setOnClickListener {
-                val intent = Intent(binding.root.context, DetailStoryActivity::class.java)
+        fun bind(review: ListStoryItem){
+            Glide.with(ivItemPhoto.context)
+                .load(review.photoUrl)
+                .into(ivItemPhoto)
+            tvItemName.text = "${review.name}"
+            tvDeskripsi.text = "${review.description}"
+
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, DetailStoryActivity::class.java)
                 val story = ListStoryItem(photoUrl = review.photoUrl, name = review.name, description = review.description)
                 intent.putExtra(DetailStoryActivity.EXTRA_STORY, story)
 
                 val optionsCompat: ActivityOptionsCompat =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        binding.root.context as Activity,
-                        Pair(binding.imgStory, "profile"),
-                        Pair(binding.tvName, "name"),
-                        Pair(binding.tvDeskripsi, "description"),
+                        itemView.context as Activity,
+                        Pair(ivItemPhoto, "profile"),
+                        Pair(tvItemName, "name"),
+                        Pair(tvDeskripsi, "description"),
                     )
-                binding.root.context.startActivity(intent,optionsCompat.toBundle())
+                itemView.context.startActivity(intent,optionsCompat.toBundle())
             }
         }
     }

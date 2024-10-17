@@ -5,10 +5,10 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -51,8 +51,8 @@ class LoginActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.loginButton.setOnClickListener {
 
-            val email = binding.emailEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
+            val email = findViewById<EditText>(R.id.ed_login_email).text.toString()
+            val password = findViewById<EditText>(R.id.ed_login_password).text.toString()
 
             viewModel.login(email, password).observe(this) { result ->
                 if (result != null) {

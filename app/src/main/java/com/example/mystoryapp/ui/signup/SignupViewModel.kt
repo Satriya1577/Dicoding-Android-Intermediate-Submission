@@ -9,5 +9,4 @@ import com.example.mystoryapp.data.remote.response.RegisterResponse
 class SignupViewModel(private val repository: StoryRepository) : ViewModel() {
 
     fun register(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> = repository.register(name, email, password)
-
 }

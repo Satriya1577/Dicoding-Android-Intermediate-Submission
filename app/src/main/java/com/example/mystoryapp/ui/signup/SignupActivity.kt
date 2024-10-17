@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -46,9 +47,9 @@ class SignupActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.signupButton.setOnClickListener {
-            val name = binding.nameEditText.text.toString()
-            val email = binding.emailEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
+            val name = findViewById<EditText>(R.id.ed_register_name).text.toString()
+            val email = findViewById<EditText>(R.id.ed_register_email).text.toString()
+            val password = findViewById<EditText>(R.id.ed_register_password).text.toString()
             viewModel.register(name, email, password).observe(this) { result ->
                 if (result != null) {
                     when(result) {

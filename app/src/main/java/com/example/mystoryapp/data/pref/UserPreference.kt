@@ -39,17 +39,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
-    fun getUser(): Flow<UserModel> {
-        return dataStore.data.map { preferences ->
-            UserModel(
-                preferences[USER_ID_KEY] ?: "",
-                preferences[TOKEN_KEY] ?: "",
-                preferences[NAME_KEY] ?: "",
-                preferences[IS_LOGIN_KEY] ?: false
-            )
-        }
-    }
-
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null

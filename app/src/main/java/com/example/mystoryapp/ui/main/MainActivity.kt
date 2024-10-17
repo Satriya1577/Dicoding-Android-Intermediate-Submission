@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -38,11 +37,11 @@ class MainActivity : AppCompatActivity() {
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
+            } else {
+                setupView()
+                setupAction()
             }
-            // this log show normal value based on account log in
         }
-        setupView()
-        setupAction()
     }
 
     private fun setupView() {
@@ -69,11 +68,16 @@ class MainActivity : AppCompatActivity() {
                         result.data.forEach {
                             items.add(it)
                         }
-                        storyAdapter.submitList(items)
-                        binding.rvStories.apply {
-                            layoutManager = LinearLayoutManager(this@MainActivity)
-                            adapter = storyAdapter
+                        if (items.isEmpty()) {
+                            binding.tvNoData.visibility = View.VISIBLE
+                        } else {
+                            storyAdapter.submitList(items)
+                            binding.rvStories.apply {
+                                layoutManager = LinearLayoutManager(this@MainActivity)
+                                adapter = storyAdapter
+                            }
                         }
+                        binding.tvNoData.visibility = View.GONE
                         binding.progressBar.visibility = View.GONE
                     }
                     is Result.Error -> {

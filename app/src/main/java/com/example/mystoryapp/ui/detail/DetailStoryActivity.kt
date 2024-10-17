@@ -3,8 +3,11 @@ package com.example.mystoryapp.ui.detail
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.mystoryapp.R
 import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.databinding.ActivityDetailStoryBinding
 import com.example.mystoryapp.ui.main.MainActivity
@@ -16,8 +19,6 @@ class DetailStoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //supportActionBar?.hide()
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -32,13 +33,16 @@ class DetailStoryActivity : AppCompatActivity() {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(EXTRA_STORY)
         }
-        binding.let {
-            Glide.with(this)
-                .load(story?.photoUrl)
-                .into(it.imgStory)
-        }
-        binding.tvName.text = story?.name
-        binding.tvDeskripsi.text = story?.description
+
+        val imgStory = findViewById<ImageView>(R.id.iv_detail_photo)
+        val tvName = findViewById<TextView>(R.id.tv_detail_name)
+        val tvDeskripsi = findViewById<TextView>(R.id.tv_detail_description)
+
+        Glide.with(this)
+            .load(story?.photoUrl)
+            .into(imgStory)
+        tvName.text = story?.name
+        tvDeskripsi.text = story?.description
         supportActionBar?.title = story?.name
 
         binding.btnBack.setOnClickListener {

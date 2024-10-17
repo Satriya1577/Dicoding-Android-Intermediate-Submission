@@ -75,13 +75,13 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/gallery"
-                app:layout_constraintBottom_toTopOf="@+id/etDescription"
+                app:layout_constraintBottom_toTopOf="@+id/ed_add_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/cameraButton" />
 
             <EditText
-                android:id="@+id/etDescription"
+                android:id="@+id/ed_add_description"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginStart="16dp"
@@ -101,7 +101,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/galleryButton" />
 
             <Button
-                android:id="@+id/uploadButton"
+                android:id="@+id/button_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -113,7 +113,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/ed_add_description" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

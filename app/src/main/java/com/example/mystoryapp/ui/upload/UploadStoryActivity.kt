@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -39,7 +41,8 @@ class UploadStoryActivity : AppCompatActivity(){
     private fun setupAction() {
         binding.cameraButton.setOnClickListener { startCamera() }
         binding.galleryButton.setOnClickListener { startGallery() }
-        binding.uploadButton.setOnClickListener { uploadImage() }
+        val uploadButton: Button = findViewById(R.id.button_add)
+        uploadButton.setOnClickListener { uploadImage() }
     }
 
     private val launcherGallery = registerForActivityResult(
@@ -82,7 +85,7 @@ class UploadStoryActivity : AppCompatActivity(){
     private fun uploadImage() {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this)
-            val description = binding.etDescription.text.toString()
+            val description = findViewById<EditText>(R.id.ed_add_description).text.toString()
             viewModel.uploadStory(imageFile, description).observe(this) { result ->
                 if (result != null) {
                     when(result) {
