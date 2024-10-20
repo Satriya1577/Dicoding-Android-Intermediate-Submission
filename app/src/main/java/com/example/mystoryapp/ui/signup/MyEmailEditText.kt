@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
+import com.example.mystoryapp.R
 
 class MyEmailEditText@JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -19,7 +20,7 @@ class MyEmailEditText@JvmOverloads constructor(
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
                 if (!s.toString().matches(emailPattern.toRegex())) {
-                    setError("Email tidak valid", null)
+                    setError(R.string.email_warning.toString(), null)
                 } else {
                     error = null
                 }

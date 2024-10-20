@@ -24,4 +24,6 @@
     <string name="gallery">Galeri</string>
     <string name="description_hint">Deskripsi</string>
     <string name="no_data_found">Tidak ada data</string>
+    <string name="password_warning">Password tidak boleh kurang dari 8 karakter</string>
+    <string name="email_warning">Email tidak valid</string>
 </resources>

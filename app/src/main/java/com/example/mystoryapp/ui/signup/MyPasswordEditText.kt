@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
+import com.example.mystoryapp.R
 
 class MyPasswordEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -19,7 +20,7 @@ class MyPasswordEditText @JvmOverloads constructor(
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.toString().length < 8) {
-                    setError("Password tidak boleh kurang dari 8 karakter", null)
+                    setError(R.string.password_warning.toString(), null)
                 } else {
                     error = null
                 }

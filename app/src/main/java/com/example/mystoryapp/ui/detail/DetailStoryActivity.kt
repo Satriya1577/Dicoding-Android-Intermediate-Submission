@@ -36,13 +36,13 @@ class DetailStoryActivity : AppCompatActivity() {
 
         val imgStory = findViewById<ImageView>(R.id.iv_detail_photo)
         val tvName = findViewById<TextView>(R.id.tv_detail_name)
-        val tvDeskripsi = findViewById<TextView>(R.id.tv_detail_description)
+        val tvDescription = findViewById<TextView>(R.id.tv_detail_description)
 
         Glide.with(this)
             .load(story?.photoUrl)
             .into(imgStory)
         tvName.text = story?.name
-        tvDeskripsi.text = story?.description
+        tvDescription.text = story?.description
         supportActionBar?.title = story?.name
 
         binding.btnBack.setOnClickListener {
