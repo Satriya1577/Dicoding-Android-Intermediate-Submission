@@ -28,4 +28,5 @@
     <string name="no_data_found">No data found</string>
     <string name="password_warning">Password is not allowed to be less than 8 characters</string>
     <string name="email_warning">Invalid email</string>
+    <string name="no_media_selected">No media selected</string>
 </resources>

@@ -20,8 +20,7 @@ class MyPasswordEditText @JvmOverloads constructor(
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.toString().length < 8) {
-                    setError(R.string.password_warning.toString(), null)
-                } else {
+                    setError(resources.getString(R.string.password_warning), null)                } else {
                     error = null
                 }
             }

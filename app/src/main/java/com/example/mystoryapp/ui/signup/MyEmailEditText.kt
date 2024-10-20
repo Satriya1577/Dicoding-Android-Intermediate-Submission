@@ -20,7 +20,7 @@ class MyEmailEditText@JvmOverloads constructor(
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
                 if (!s.toString().matches(emailPattern.toRegex())) {
-                    setError(R.string.email_warning.toString(), null)
+                    setError(resources.getString(R.string.email_warning), null)
                 } else {
                     error = null
                 }
