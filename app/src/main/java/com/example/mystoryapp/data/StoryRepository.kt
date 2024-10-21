@@ -11,6 +11,7 @@ import com.example.mystoryapp.data.remote.response.FileUploadResponse
 import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.data.remote.response.LoginResponse
 import com.example.mystoryapp.data.remote.response.RegisterResponse
+import com.example.mystoryapp.data.remote.response.StoryResponse
 import com.example.mystoryapp.data.remote.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
@@ -99,6 +100,27 @@ class StoryRepository private constructor(
             )
             val client = apiService.uploadStory(multipartBody, requestBody)
             emit(Result.Success(client))
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+            val errorMessage = errorBody.message
+            emit(Result.Error(errorMessage ?: ""))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message ?: "Unknown error"))
+        }
+    }
+
+    fun getStoriesWithLocation(): LiveData<Result<List<ListStoryItem>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val listStory = ArrayList<ListStoryItem>()
+            val client = apiService.getStories().listStory
+            client?.forEach {
+                if (it != null) {
+                    listStory.add(it)
+                }
+            }
+            emit(Result.Success(listStory))
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)

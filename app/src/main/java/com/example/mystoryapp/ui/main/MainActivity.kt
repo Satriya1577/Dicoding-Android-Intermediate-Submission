@@ -19,6 +19,7 @@ import com.example.mystoryapp.data.remote.Result
 import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.ui.ViewModelFactory
+import com.example.mystoryapp.ui.maps.MapsActivity
 import com.example.mystoryapp.ui.upload.UploadStoryActivity
 import com.example.mystoryapp.ui.welcome.WelcomeActivity
 
@@ -117,6 +118,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.action_logout -> {
                 viewModel.logout()
+            }
+            R.id.action_map -> {
+                val moveIntent = Intent(this@MainActivity, MapsActivity::class.java)
+                startActivity(moveIntent)
             }
         }
         return super.onOptionsItemSelected(item)

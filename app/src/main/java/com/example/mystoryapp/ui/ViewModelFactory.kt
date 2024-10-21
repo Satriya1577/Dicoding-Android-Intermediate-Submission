@@ -7,6 +7,7 @@ import com.example.mystoryapp.data.StoryRepository
 import com.example.mystoryapp.di.Injection
 import com.example.mystoryapp.ui.login.LoginViewModel
 import com.example.mystoryapp.ui.main.MainViewModel
+import com.example.mystoryapp.ui.maps.MapsViewModel
 import com.example.mystoryapp.ui.signup.SignupViewModel
 import com.example.mystoryapp.ui.upload.UploadStoryViewModel
 
@@ -26,6 +27,9 @@ class ViewModelFactory(private val repository: StoryRepository) : ViewModelProvi
             }
             modelClass.isAssignableFrom(UploadStoryViewModel::class.java) -> {
                 UploadStoryViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
