@@ -1,7 +1,9 @@
 package com.example.mystoryapp.ui.maps
 
+import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -56,6 +59,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             data.add(it)
                         }
                         addManyMarker(data)
+                        binding.progressBar.visibility = View.GONE
                     }
                     is Result.Error -> {
                         AlertDialog.Builder(this).apply {
@@ -67,14 +71,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             create()
                             show()
                         }
+                        binding.progressBar.visibility = View.GONE
                     }
 
                     is Result.Loading -> {
-
+                        binding.progressBar.visibility = View.VISIBLE
                     }
                 }
             }
         }
+        setMapStyle()
     }
 
     private fun addManyMarker(data: ArrayList<ListStoryItem>) {
@@ -84,8 +90,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             if (lat != null && lon != null) {
                 val position = LatLng(lat, lon)
-                Log.d("MapsActivity", "lat: $lat, lon: $lon")
-
                 mMap.addMarker(
                     MarkerOptions()
                         .position(position)
@@ -105,5 +109,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 300
             )
         )
+    }
+
+    private fun setMapStyle() {
+        try {
+            val success =
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+            if (!success) {
+                Toast.makeText(this@MapsActivity, "Style parsing failed", Toast.LENGTH_SHORT).show()
+            }
+        } catch (exception: Resources.NotFoundException) {
+            Toast.makeText(this@MapsActivity, "Can't find style. Error: ", Toast.LENGTH_SHORT).show()
+        }
     }
 }

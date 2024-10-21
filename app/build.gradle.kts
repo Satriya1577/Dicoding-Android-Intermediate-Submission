@@ -14,9 +14,8 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
+        manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = findProperty("GOOGLE_MAPS_API_KEY") as String
         buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/v1/\"")
     }
 
@@ -51,6 +50,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

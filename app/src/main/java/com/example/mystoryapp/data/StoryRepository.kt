@@ -11,7 +11,6 @@ import com.example.mystoryapp.data.remote.response.FileUploadResponse
 import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.data.remote.response.LoginResponse
 import com.example.mystoryapp.data.remote.response.RegisterResponse
-import com.example.mystoryapp.data.remote.response.StoryResponse
 import com.example.mystoryapp.data.remote.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
@@ -88,17 +87,28 @@ class StoryRepository private constructor(
     }
 
 
-    fun uploadStory(imageFile: File, description: String): LiveData<Result<FileUploadResponse>> = liveData {
+    fun uploadStory(imageFile: File, description: String, lat: Float? = null, lon: Float? = null): LiveData<Result<FileUploadResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val requestBody = description.toRequestBody("text/plain".toMediaType())
+            val descriptionRequesBody = description.toRequestBody("text/plain".toMediaType())
             val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
             val multipartBody = MultipartBody.Part.createFormData(
                 "photo",
                 imageFile.name,
                 requestImageFile
             )
-            val client = apiService.uploadStory(multipartBody, requestBody)
+
+            val client = when {
+                lat == null && lon == null -> {
+                    apiService.uploadStory(multipartBody, descriptionRequesBody)
+                }
+                else -> {
+                    val latDescriptionBody = lat.toString().toRequestBody("text/plain".toMediaType())
+                    val lonDescriptionBody = lon.toString().toRequestBody("text/plain".toMediaType())
+                    apiService.uploadStory(multipartBody, descriptionRequesBody, latDescriptionBody, lonDescriptionBody)
+                }
+            }
+
             emit(Result.Success(client))
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()
@@ -114,7 +124,7 @@ class StoryRepository private constructor(
         emit(Result.Loading)
         try {
             val listStory = ArrayList<ListStoryItem>()
-            val client = apiService.getStories().listStory
+            val client = apiService.getStoriesWithLocation().listStory
             client?.forEach {
                 if (it != null) {
                     listStory.add(it)

@@ -5,5 +5,5 @@ import com.example.mystoryapp.data.StoryRepository
 import java.io.File
 
 class UploadStoryViewModel (private val repository: StoryRepository) : ViewModel() {
-    fun uploadStory(file: File, description: String) = repository.uploadStory(file,description)
+    fun uploadStory(file: File, description: String, lat: Float? = null, lon: Float? = null) = repository.uploadStory(file,description, lat, lon)
 }

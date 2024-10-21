@@ -3,6 +3,8 @@
     <string name="success_title" translatable="false">Yeah!</string>
     <string name="failed_title" translatable="false">Warning!</string>
     <string name="map" translatable="false">Map</string>
+    <string name="title_activity_maps" translatable="false">MapsActivity</string>
+
 
     <string name="success_login_message">You have successfully logged in. Can\'t wait to share your story, huh?</string>
     <string name="positive_reply">Next</string>
@@ -30,5 +32,7 @@
     <string name="password_warning">Password is not allowed to be less than 8 characters</string>
     <string name="email_warning">Invalid email</string>
     <string name="no_media_selected">No media selected</string>
-    <string name="title_activity_maps">MapsActivity</string>
+    <string name="share_location">Share story location</string>
+    <string name="location_denied">Location permission denied</string>
+
 </resources>

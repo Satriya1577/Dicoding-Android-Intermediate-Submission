@@ -91,14 +91,38 @@
                 android:background="@drawable/edittext_border"
                 android:gravity="top"
                 android:hint="@string/description_hint"
-                android:inputType="textImeMultiLine"
+                android:inputType="textMultiLine"
                 android:lines="5"
                 android:minLines="3"
                 android:padding="10dp"
                 android:scrollbars="vertical"
+                android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/galleryButton" />
+
+            <TextView
+                android:id="@+id/tvShareStoryLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share_location"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/ed_add_description"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchLocation"
+                android:layout_width="72dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/tvShareStoryLocation"
+                app:layout_constraintBottom_toBottomOf="@+id/tvShareStoryLocation"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <Button
                 android:id="@+id/button_add"
@@ -113,7 +137,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ed_add_description" />
+                app:layout_constraintTop_toBottomOf="@+id/tvShareStoryLocation" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

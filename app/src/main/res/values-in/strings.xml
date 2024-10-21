@@ -27,4 +27,6 @@
     <string name="password_warning">Password tidak boleh kurang dari 8 karakter</string>
     <string name="email_warning">Email tidak valid</string>
     <string name="no_media_selected">Tidak ada foto yang dipilih</string>
+    <string name="share_location">Bagikan lokasi story</string>
+    <string name="location_denied">Akses lokasi ditolak</string>
 </resources>
