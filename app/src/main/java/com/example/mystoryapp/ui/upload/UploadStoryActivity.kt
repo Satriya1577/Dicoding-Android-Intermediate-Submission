@@ -41,11 +41,15 @@ class UploadStoryActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         clientLocation = LocationServices.getFusedLocationProviderClient(this)
-        setSupportActionBar(binding.toolbar)
+
+        setupView()
+        setupAction()
+    }
+
+    private fun setupView () {
+        supportActionBar?.show()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        setupAction()
     }
 
     private fun setupAction() {

@@ -4,6 +4,8 @@
     <string name="failed_title" translatable="false">Warning!</string>
     <string name="map" translatable="false">Map</string>
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
+    <string name="content_description" translatable="false">Upload story</string>
+    <string name="preview_image" translatable="false">Preview image</string>
 
 
     <string name="success_login_message">You have successfully logged in. Can\'t wait to share your story, huh?</string>
@@ -34,5 +36,6 @@
     <string name="no_media_selected">No media selected</string>
     <string name="share_location">Share story location</string>
     <string name="location_denied">Location permission denied</string>
+
 
 </resources>

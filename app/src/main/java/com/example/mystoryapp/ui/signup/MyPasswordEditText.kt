@@ -9,12 +9,23 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.mystoryapp.R
 
-class MyPasswordEditText @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : AppCompatEditText(context, attrs) {
+class MyPasswordEditText : AppCompatEditText {
 
+    constructor(context: Context) : super(context) {
+        init()
+    }
 
-    init {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        init()
+    }
+
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        init()
+    }
+
+    private fun init() {
+        hint = "Password 8 karakter"
+        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
 
@@ -28,11 +39,4 @@ class MyPasswordEditText @JvmOverloads constructor(
             override fun afterTextChanged(s: Editable) { }
         })
     }
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-        hint = "Password minimal 8 karakter"
-        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-    }
-
 }

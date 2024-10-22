@@ -1,7 +1,6 @@
 package com.example.mystoryapp.ui.signup
 
 import android.content.Context
-import android.graphics.Canvas
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -9,13 +8,25 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.mystoryapp.R
 
-class MyEmailEditText@JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : AppCompatEditText(context, attrs)  {
+class MyEmailEditText : AppCompatEditText {
 
-    init {
+    constructor(context: Context) : super(context) {
+        init()
+    }
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        init()
+    }
+
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        init()
+    }
+
+    private fun init() {
+        hint = "email@gmail.com"
+        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
         addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
+            override fun beforeTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
@@ -26,13 +37,7 @@ class MyEmailEditText@JvmOverloads constructor(
                 }
             }
 
-            override fun afterTextChanged(s: Editable) { }
+            override fun afterTextChanged(s: Editable?) { }
         })
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-        hint = "email@gmail.com"
-        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 }

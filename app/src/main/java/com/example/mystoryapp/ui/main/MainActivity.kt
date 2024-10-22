@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        setSupportActionBar(binding.toolbar)
+        supportActionBar?.show()
     }
 
 
