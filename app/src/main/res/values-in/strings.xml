@@ -29,4 +29,6 @@
     <string name="no_media_selected">Tidak ada foto yang dipilih</string>
     <string name="share_location">Bagikan lokasi story</string>
     <string name="location_denied">Akses lokasi ditolak</string>
+    <string name="retry">Coba lagi</string>
+
 </resources>

@@ -6,17 +6,14 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mystoryapp.R
+import com.example.mystoryapp.adapter.LoadingStateAdapter
 import com.example.mystoryapp.adapter.StoryAdapter
-import com.example.mystoryapp.data.remote.Result
-import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.ui.ViewModelFactory
 import com.example.mystoryapp.ui.maps.MapsActivity
@@ -41,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 setupView()
                 setupAction()
+                getData()
             }
         }
     }
@@ -60,46 +58,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setupAction() {
-        val storyAdapter = StoryAdapter()
-        viewModel.getStories().observe(this) { result ->
-            if (result != null) {
-                when(result) {
-                    is Result.Success -> {
-                        val items = ArrayList<ListStoryItem>()
-                        result.data.forEach {
-                            items.add(it)
-                        }
-                        if (items.isEmpty()) {
-                            binding.tvNoData.visibility = View.VISIBLE
-                        } else {
-                            storyAdapter.submitList(items)
-                            binding.rvStories.apply {
-                                layoutManager = LinearLayoutManager(this@MainActivity)
-                                adapter = storyAdapter
-                            }
-                        }
-                        binding.tvNoData.visibility = View.GONE
-                        binding.progressBar.visibility = View.GONE
-                    }
-                    is Result.Error -> {
-                        AlertDialog.Builder(this).apply {
-                            setTitle(R.string.failed_title)
-                            setMessage(result.error)
-                            setPositiveButton(R.string.positive_reply) { dialog, _ ->
-                                dialog.dismiss()
-                            }
-                            create()
-                            show()
-                        }
-                        binding.progressBar.visibility = View.GONE
-                    }
-                    is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
-                }
-            }
-        }
-
         binding.btnAddStories.setOnClickListener {
             val moveIntent = Intent(this@MainActivity, UploadStoryActivity::class.java)
             startActivity(moveIntent)
@@ -127,8 +85,23 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun getData() {
+        binding.rvStories.layoutManager = LinearLayoutManager(this)
+        val storyAdapter = StoryAdapter()
+        binding.rvStories.adapter = storyAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                storyAdapter.retry()
+            }
+        )
+        viewModel.stories.observe(this) {
+            //binding.progressBar.visibility = View.VISIBLE
+            storyAdapter.submitData(lifecycle, it)
+            //binding.progressBar.visibility = View.GONE
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        viewModel.getStories()
+        viewModel.stories
     }
 }

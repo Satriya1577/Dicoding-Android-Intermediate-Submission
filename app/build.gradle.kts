@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -61,6 +62,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx) // for lifecycleScope
     implementation(libs.glide)
     implementation(libs.androidx.espresso.intents) // for glide
+    implementation(libs.androidx.paging.runtime.ktx) // paging 3
+    implementation(libs.androidx.room.ktx) // ksp room database
+    ksp(libs.room.compiler) // ksp room database
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)

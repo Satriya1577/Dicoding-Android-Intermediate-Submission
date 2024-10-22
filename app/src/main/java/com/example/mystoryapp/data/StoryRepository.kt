@@ -1,8 +1,11 @@
 package com.example.mystoryapp.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.example.mystoryapp.data.pref.UserModel
 import com.example.mystoryapp.data.pref.UserPreference
 import com.example.mystoryapp.data.remote.Result
@@ -12,6 +15,7 @@ import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.data.remote.response.LoginResponse
 import com.example.mystoryapp.data.remote.response.RegisterResponse
 import com.example.mystoryapp.data.remote.retrofit.ApiService
+import com.example.mystoryapp.paging.StoryPagingSource
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
@@ -69,24 +73,6 @@ class StoryRepository private constructor(
         }
     }
 
-    fun getStories(): LiveData<Result<List<ListStoryItem>>> = liveData {
-        emit(Result.Loading)
-        try {
-            val listStory = ArrayList<ListStoryItem>()
-            val client = apiService.getStories().listStory
-            client?.forEach {
-                if (it != null) {
-                    listStory.add(it)
-                }
-            }
-            emit(Result.Success(listStory))
-        } catch (e: Exception) {
-            Log.e("StoryRepository", "Error fetching stories: ${e.message}")
-            emit(Result.Error(e.message.toString()))
-        }
-    }
-
-
     fun uploadStory(imageFile: File, description: String, lat: Float? = null, lon: Float? = null): LiveData<Result<FileUploadResponse>> = liveData {
         emit(Result.Loading)
         try {
@@ -139,6 +125,17 @@ class StoryRepository private constructor(
         } catch (e: Exception) {
             emit(Result.Error(e.message ?: "Unknown error"))
         }
+    }
+
+    fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                StoryPagingSource(apiService)
+            }
+        ).liveData
     }
 
     companion object {

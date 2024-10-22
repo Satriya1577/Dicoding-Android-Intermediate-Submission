@@ -29,6 +29,9 @@ runner = "1.5.2"
 coreKtxVersion = "1.6.1"
 junitJunit = "4.12"
 espressoIntents = "3.6.1"
+pagingRuntimeKtx = "3.1.0"
+roomCompiler = "2.5.2"
+roomKtx = "2.5.2"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -58,6 +61,9 @@ play-services-location = { group = "com.google.android.gms", name = "play-servic
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
 junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
 androidx-espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "espressoIntents" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

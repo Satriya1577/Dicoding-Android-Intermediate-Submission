@@ -2,11 +2,12 @@ package com.example.mystoryapp.adapter
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mystoryapp.data.remote.response.ListStoryItem
@@ -14,14 +15,16 @@ import com.example.mystoryapp.databinding.ItemStoryBinding
 import com.example.mystoryapp.ui.detail.DetailStoryActivity
 
 
-class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val review = getItem(position)
-        holder.bind(review)
+        if (review != null) {
+            holder.bind(review)
+        }
     }
     class MyViewHolder(private val binding: ItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(review: ListStoryItem){
@@ -33,7 +36,12 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_
 
             binding.root.setOnClickListener {
                 val intent = Intent(binding.root.context, DetailStoryActivity::class.java)
-                val story = ListStoryItem(photoUrl = review.photoUrl, name = review.name, description = review.description)
+                val story = ListStoryItem(
+                    id = review.id,
+                    photoUrl = review.photoUrl,
+                    name = review.name,
+                    description = review.description
+                )
                 intent.putExtra(DetailStoryActivity.EXTRA_STORY, story)
 
                 val optionsCompat: ActivityOptionsCompat =
