@@ -72,9 +72,13 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.mockito.inline)
     testImplementation(libs.junit.junit)
+    testImplementation(libs.androidx.core.testing) // InstantTaskExecutorRule
+    testImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.rules)
+    androidTestImplementation(libs.androidx.core.testing) //InstantTaskExecutorRule
+    androidTestImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
 }

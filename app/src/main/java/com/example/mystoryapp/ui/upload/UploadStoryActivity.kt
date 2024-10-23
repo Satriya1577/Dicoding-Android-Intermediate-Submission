@@ -58,14 +58,14 @@ class UploadStoryActivity : AppCompatActivity(){
             galleryButton.setOnClickListener { startGallery() }
             buttonAdd.setOnClickListener { uploadImage() }
             switchLocation.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-               if (isChecked) {
-                   getUserLocation()
-                   isLocationShared = true
-               } else {
-                   lat = null
-                   lon = null
-                   isLocationShared = false
-               }
+                if (isChecked) {
+                    getUserLocation()
+                    isLocationShared = true
+                } else {
+                    lat = null
+                    lon = null
+                    isLocationShared = false
+                }
             }
         }
     }
@@ -113,40 +113,40 @@ class UploadStoryActivity : AppCompatActivity(){
             val description = findViewById<EditText>(R.id.ed_add_description).text.toString()
             viewModel.uploadStory(imageFile, description, lat, lon).observe(this) { result ->
                 if (result != null) {
-                        when(result) {
-                            is Result.Success -> {
-                                AlertDialog.Builder(this).apply {
-                                    setTitle(R.string.success_title)
-                                    setMessage(R.string.success_upload_message)
-                                    setPositiveButton(R.string.positive_reply) { _, _ ->
-                                        val intent = Intent(this@UploadStoryActivity, MainActivity::class.java)
-                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                        startActivity(intent)
-                                        finish()
-                                    }
-                                    create()
-                                    show()
+                    when(result) {
+                        is Result.Success -> {
+                            AlertDialog.Builder(this).apply {
+                                setTitle(R.string.success_title)
+                                setMessage(R.string.success_upload_message)
+                                setPositiveButton(R.string.positive_reply) { _, _ ->
+                                    val intent = Intent(this@UploadStoryActivity, MainActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(intent)
+                                    finish()
                                 }
-                                binding.progressIndicator.visibility = View.GONE
+                                create()
+                                show()
                             }
-                            is Result.Error -> {
-                                AlertDialog.Builder(this).apply {
-                                    setTitle(R.string.failed_title)
-                                    setMessage(result.error)
-                                    setPositiveButton(R.string.positive_reply) { dialog, _ ->
-                                        dialog.dismiss()
-                                    }
-                                    create()
-                                    show()
+                            binding.progressIndicator.visibility = View.GONE
+                        }
+                        is Result.Error -> {
+                            AlertDialog.Builder(this).apply {
+                                setTitle(R.string.failed_title)
+                                setMessage(result.error)
+                                setPositiveButton(R.string.positive_reply) { dialog, _ ->
+                                    dialog.dismiss()
                                 }
-                                binding.progressIndicator.visibility = View.GONE
+                                create()
+                                show()
+                            }
+                            binding.progressIndicator.visibility = View.GONE
 
-                            }
-                            is Result.Loading -> {
-                                binding.progressIndicator.visibility = View.VISIBLE
-                            }
+                        }
+                        is Result.Loading -> {
+                            binding.progressIndicator.visibility = View.VISIBLE
                         }
                     }
+                }
             }
         }
     }

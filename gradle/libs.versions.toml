@@ -33,6 +33,8 @@ pagingRuntimeKtx = "3.1.0"
 roomCompiler = "2.5.2"
 roomKtx = "2.5.2"
 roomPaging = "2.4.0-rc01"
+coreTesting = "2.1.0"
+kotlinxCoroutinesTest = "1.6.1"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -66,7 +68,8 @@ androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", v
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
-
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

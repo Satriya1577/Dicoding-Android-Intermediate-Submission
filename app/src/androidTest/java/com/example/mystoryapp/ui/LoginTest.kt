@@ -1,5 +1,10 @@
-package com.example.mystoryapp.ui.main
+package com.example.mystoryapp.ui
 
+import android.content.Context
+import androidx.activity.viewModels
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.closeSoftKeyboard
@@ -17,6 +22,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.example.mystoryapp.R
 import com.example.mystoryapp.ui.login.LoginActivity
+import com.example.mystoryapp.ui.main.MainViewModel
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -27,10 +33,13 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class LoginTest {
 
-    private val validEmailSample = "wibowo@gmail.com"
-    private val validPasswordSample = "wibowo@gmail.com"
-    private val invalidEmailSample = "satsat@gmail.com"
-    private val invalidPasswordSample = "satsat@gmail.com"
+    private val registeredEmail = "wibowo@gmail.com"
+    private val registeredPassword = "wibowo@gmail.com"
+    private val unregisteredEmail = "satsat@gmail.com"
+    private val unregisteredPassword = "satsat@gmail.com"
+    private val invalidEmailFormat = "this_is_email.com"
+    private val lessThanEightPassword = "12345"
+    private val emptyCredential = ""
 
     @Before
     fun setup () {
@@ -40,10 +49,34 @@ class LoginTest {
     }
 
     @Test
-    fun testValidLoginLogout() {
-        onView(withId(R.id.ed_login_email)).perform(typeText(validEmailSample))
+    fun test_01_testLoginWithEmptyCredentials() {
+        onView(withId(R.id.ed_login_email)).perform(typeText(emptyCredential))
         closeSoftKeyboard()
-        onView(withId(R.id.ed_login_password)).perform(typeText(validPasswordSample))
+        onView(withId(R.id.ed_login_password)).perform(typeText(emptyCredential))
+        closeSoftKeyboard()
+        onView(withId(R.id.loginButton)).perform(click())
+        onView(withText(R.string.positive_reply)).inRoot(isDialog()).check(matches(isDisplayed())).perform(click())
+        onView(withId(R.id.ed_login_email)).check(matches(isDisplayed()))
+        onView(withId(R.id.ed_login_password)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun test_02_testLoginWithUnregisteredCredentials() {
+        onView(withId(R.id.ed_login_email)).perform(typeText(unregisteredEmail))
+        closeSoftKeyboard()
+        onView(withId(R.id.ed_login_password)).perform(typeText(unregisteredPassword))
+        closeSoftKeyboard()
+        onView(withId(R.id.loginButton)).perform(click())
+        onView(withText(R.string.positive_reply)).inRoot(isDialog()).check(matches(isDisplayed())).perform(click())
+        onView(withId(R.id.ed_login_email)).check(matches(isDisplayed()))
+        onView(withId(R.id.ed_login_password)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun test_03_testLoginLogoutWithRegisteredCredentials() {
+        onView(withId(R.id.ed_login_email)).perform(typeText(registeredEmail))
+        closeSoftKeyboard()
+        onView(withId(R.id.ed_login_password)).perform(typeText(registeredPassword))
         closeSoftKeyboard()
         onView(withId(R.id.loginButton)).perform(click())
         onView(withText(R.string.positive_reply)).inRoot(isDialog()).check(matches(isDisplayed())).perform(click())
@@ -52,14 +85,16 @@ class LoginTest {
     }
 
     @Test
-    fun testInvalidLogin() {
-        onView(withId(R.id.ed_login_email)).perform(typeText(invalidEmailSample))
+    fun test_04_testLoginWarningWithInvalidEmailPasswordFormat() {
+        onView(withId(R.id.ed_login_email)).perform(typeText(invalidEmailFormat))
         closeSoftKeyboard()
-        onView(withId(R.id.ed_login_password)).perform(typeText(invalidPasswordSample))
+        onView(withId(R.id.ed_login_password)).perform(typeText(lessThanEightPassword))
         closeSoftKeyboard()
         onView(withId(R.id.loginButton)).perform(click())
+        onView(withText(R.string.positive_reply)).check(matches(isDisplayed())).perform(click())
+        onView(withId(R.id.ed_login_email)).check(matches(isDisplayed()))
+        onView(withId(R.id.ed_login_password)).check(matches(isDisplayed()))
     }
-
 
     @After
     fun tearDown() {

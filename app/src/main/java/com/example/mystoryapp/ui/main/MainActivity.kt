@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowInsets
@@ -112,11 +111,13 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             storyAdapter.submitData(lifecycle, temp)
+            binding.rvStories.scrollToPosition(0)
         }
+        storyAdapter.refresh()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.stories
+        getData()
     }
 }

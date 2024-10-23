@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface StoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertStory(quote: List<Story>)
+    suspend fun insertStory(story: List<Story>)
 
     @Query("SELECT * FROM story")
     fun getAllStory(): PagingSource<Int, Story>
