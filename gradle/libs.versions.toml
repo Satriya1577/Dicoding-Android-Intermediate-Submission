@@ -32,6 +32,7 @@ espressoIntents = "3.6.1"
 pagingRuntimeKtx = "3.1.0"
 roomCompiler = "2.5.2"
 roomKtx = "2.5.2"
+roomPaging = "2.4.0-rc01"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -64,6 +65,8 @@ androidx-espresso-intents = { group = "androidx.test.espresso", name = "espresso
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

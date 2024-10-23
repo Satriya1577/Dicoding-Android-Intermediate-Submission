@@ -4,16 +4,21 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.paging.PagingData
+import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mystoryapp.R
 import com.example.mystoryapp.adapter.LoadingStateAdapter
 import com.example.mystoryapp.adapter.StoryAdapter
+import com.example.mystoryapp.data.local.Story
+import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.ui.ViewModelFactory
 import com.example.mystoryapp.ui.maps.MapsActivity
@@ -93,10 +98,20 @@ class MainActivity : AppCompatActivity() {
                 storyAdapter.retry()
             }
         )
-        viewModel.stories.observe(this) {
-            //binding.progressBar.visibility = View.VISIBLE
-            storyAdapter.submitData(lifecycle, it)
-            //binding.progressBar.visibility = View.GONE
+        viewModel.stories.observe(this) { result ->
+            val pagingDataStory: PagingData<Story> = result
+            val temp: PagingData<ListStoryItem> = pagingDataStory.map { story ->
+                ListStoryItem(
+                    photoUrl = story.photoUrl,
+                    createdAt = story.createdAt,
+                    name = story.name,
+                    description = story.description,
+                    lon = story.lon,
+                    id = story.id,
+                    lat = story.lat
+                )
+            }
+            storyAdapter.submitData(lifecycle, temp)
         }
     }
 

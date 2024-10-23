@@ -2,7 +2,6 @@ package com.example.mystoryapp.adapter
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
@@ -37,7 +36,6 @@ class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolder>
             binding.root.setOnClickListener {
                 val intent = Intent(binding.root.context, DetailStoryActivity::class.java)
                 val story = ListStoryItem(
-                    id = review.id,
                     photoUrl = review.photoUrl,
                     name = review.name,
                     description = review.description
@@ -62,7 +60,7 @@ class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolder>
                 return oldItem == newItem
             }
             override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
         }
     }

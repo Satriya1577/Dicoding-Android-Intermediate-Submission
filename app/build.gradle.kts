@@ -34,6 +34,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
 
     buildFeatures {
@@ -65,6 +66,7 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx) // paging 3
     implementation(libs.androidx.room.ktx) // ksp room database
     ksp(libs.room.compiler) // ksp room database
+    implementation(libs.androidx.room.paging) // room paging
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)

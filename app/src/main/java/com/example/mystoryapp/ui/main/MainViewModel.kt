@@ -7,9 +7,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.mystoryapp.data.StoryRepository
+import com.example.mystoryapp.data.local.Story
 import com.example.mystoryapp.data.pref.UserModel
-import com.example.mystoryapp.data.remote.Result
-import com.example.mystoryapp.data.remote.response.ListStoryItem
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: StoryRepository) : ViewModel() {
@@ -23,10 +22,5 @@ class MainViewModel(private val repository: StoryRepository) : ViewModel() {
         }
     }
 
-//    fun getStories(): LiveData<Result<List<ListStoryItem>>> {
-//        return repository.getStories()
-//    }
-
-    val stories: LiveData<PagingData<ListStoryItem>> = repository.getStories().cachedIn(viewModelScope)
-
+    val stories: LiveData<PagingData<Story>> = repository.getStories().cachedIn(viewModelScope)
 }

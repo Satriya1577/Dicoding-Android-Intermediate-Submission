@@ -1,17 +1,21 @@
-package com.example.mystoryapp.data.local.database
+package com.example.mystoryapp.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.mystoryapp.data.remote.response.ListStoryItem
+import com.example.mystoryapp.data.local.database.RemoteKeys
+import com.example.mystoryapp.data.local.database.RemoteKeysDao
 
 @Database(
-    entities = [ListStoryItem::class],
-    version = 1,
+    entities = [Story::class, RemoteKeys::class],
+    version = 2,
     exportSchema = false
 )
 abstract class StoryDatabase : RoomDatabase() {
+
+    abstract fun storyDao(): StoryDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     companion object {
         @Volatile
