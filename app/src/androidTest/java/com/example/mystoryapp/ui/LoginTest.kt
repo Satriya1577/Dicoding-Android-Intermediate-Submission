@@ -1,10 +1,5 @@
 package com.example.mystoryapp.ui
 
-import android.content.Context
-import androidx.activity.viewModels
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.closeSoftKeyboard
@@ -22,7 +17,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.example.mystoryapp.R
 import com.example.mystoryapp.ui.login.LoginActivity
-import com.example.mystoryapp.ui.main.MainViewModel
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

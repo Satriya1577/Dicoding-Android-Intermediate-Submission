@@ -3,7 +3,6 @@ package com.example.mystoryapp.data.local
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mystoryapp.data.remote.response.ListStoryItem
 import com.google.gson.annotations.SerializedName
 
 

@@ -1,7 +1,6 @@
 package com.example.mystoryapp.ui.signup
 
 import android.content.Context
-import android.graphics.Canvas
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet

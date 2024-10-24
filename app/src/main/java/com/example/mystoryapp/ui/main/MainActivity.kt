@@ -29,12 +29,14 @@ class MainActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
     private lateinit var binding: ActivityMainBinding
+    private lateinit var storyAdapter: StoryAdapter
+    private var newDataIsAdded: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        storyAdapter = StoryAdapter()
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.btnAddStories.setOnClickListener {
+            newDataIsAdded = true
             val moveIntent = Intent(this@MainActivity, UploadStoryActivity::class.java)
             startActivity(moveIntent)
         }
@@ -91,7 +94,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun getData() {
         binding.rvStories.layoutManager = LinearLayoutManager(this)
-        val storyAdapter = StoryAdapter()
         binding.rvStories.adapter = storyAdapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
                 storyAdapter.retry()
@@ -113,11 +115,10 @@ class MainActivity : AppCompatActivity() {
             storyAdapter.submitData(lifecycle, temp)
             binding.rvStories.scrollToPosition(0)
         }
-        storyAdapter.refresh()
     }
 
     override fun onResume() {
         super.onResume()
-        getData()
+        storyAdapter.refresh()
     }
 }
