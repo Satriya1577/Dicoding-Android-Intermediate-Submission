@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mystoryapp.R
 import com.example.mystoryapp.adapter.LoadingStateAdapter
 import com.example.mystoryapp.adapter.StoryAdapter
@@ -93,12 +94,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData() {
+        binding.rvStories.setHasFixedSize(true)
         binding.rvStories.layoutManager = LinearLayoutManager(this)
         binding.rvStories.adapter = storyAdapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
                 storyAdapter.retry()
             }
         )
+
+        storyAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart == 0) {
+                    binding.rvStories.scrollToPosition(0)
+                }
+            }
+        })
+    
         viewModel.stories.observe(this) { result ->
             val pagingDataStory: PagingData<Story> = result
             val temp: PagingData<ListStoryItem> = pagingDataStory.map { story ->
@@ -113,13 +124,6 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             storyAdapter.submitData(lifecycle, temp)
-            binding.rvStories.scrollToPosition(0)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getData()
-        storyAdapter.refresh()
     }
 }
