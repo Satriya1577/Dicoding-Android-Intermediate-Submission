@@ -53,32 +53,32 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
     implementation(libs.core.ktx)
-    implementation(libs.androidx.datastore.preferences) // datastore
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.androidx.activity.ktx)
-    implementation(libs.retrofit) //retrofit
-    implementation(libs.retrofit2.converter.gson) // retrofit
-    implementation(libs.logging.interceptor) // retrofit okhttp
-    implementation(libs.androidx.lifecycle.runtime.ktx) // for lifecycleScope
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.glide)
-    implementation(libs.androidx.espresso.intents) // for glide
-    implementation(libs.androidx.paging.runtime.ktx) // paging 3
-    implementation(libs.androidx.room.ktx) // ksp room database
-    ksp(libs.room.compiler) // ksp room database
-    implementation(libs.androidx.room.paging) // room paging
+    implementation(libs.androidx.espresso.intents)
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.androidx.room.paging)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.mockito.inline)
     testImplementation(libs.junit.junit)
-    testImplementation(libs.androidx.core.testing) // InstantTaskExecutorRule
-    testImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.rules)
-    androidTestImplementation(libs.androidx.core.testing) //InstantTaskExecutorRule
-    androidTestImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
+    androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 }
